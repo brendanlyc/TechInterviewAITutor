@@ -1,0 +1,98 @@
+version: '1'
+name: tetor
+
+services:
+  nginx:
+    container_name: tetor_nginx
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    image: tetor_nginx:latest
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "8080:443"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/ssl/certs
+    networks:
+      - tetor_network
+
+  backend:
+    container_name: tetor_backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: tetor_backend:latest
+    environment:
+      POSTGRES_DB: TetorDB
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      MONGO_URI: mongodb://mongodb:27017/tetordb
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+    expose: 
+      - "8000"
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    networks: 
+      - tetor_network
+
+
+  frontend:
+    container_name: tetor_frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    image: tetor_frontend:latest
+    expose:
+      - "80"
+    networks: 
+      - tetor_network
+
+  postgres:
+    container_name: tetor_postgres
+    image: postgres:17.0-alpine3.20
+    environment:
+      POSTGRES_DB: TetorDB
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tetor_network
+    ports:
+      - "5432:5432"
+
+  mongodb:
+    container_name: tetor_mongodb
+    image: mongo:8.0.0
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - tetor_network
+    ports:
+      - "27017:27017"
+
+  redis:
+    container_name: tetor_redis
+    image: redis:alpine3.20 
+    volumes: 
+      - redis_data:/data
+    networks:
+      - tetor_network
+    ports:
+      - "6379:6379"
+
+networks:
+  tetor_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongodb_data:
+  redis_data:

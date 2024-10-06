@@ -1,0 +1,27 @@
+#For building frontend
+#pull official base image
+FROM node:21-alpine AS builder
+
+#Set working directory and coppy content in container
+WORKDIR /frontend
+
+#Install Node modules
+COPY package*json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+#For serving frontend
+FROM nginx:1.26.2-alpine  
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
+
+COPY --from=builder /frontend/build /usr/share/nginx/html
+
+EXPOSE 80
+
+#Start FastAPI Uvicorn
+CMD ["nginx", "-g", "daemon off;"]
