@@ -3,3 +3,7 @@ uvicorn
 psycopg2-binary
 pymongo
 redis
+pydantic
+sqlalchemy
+argon2-cffi
+email-validator
