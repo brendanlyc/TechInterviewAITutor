@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from sqlalchemy.orm import relationship
+from ..database import Base
 
 class User(Base):
     __tablename__ = 'users'
@@ -10,3 +9,6 @@ class User(Base):
     email = Column(String(255),unique=True,nullable=False)
     username = Column(String(255),unique=True,nullable=False)
     hashed_password = Column(String(255),nullable=False)
+
+    learning_paths = relationship("LearningPath", back_populates="user", cascade="all, delete-orphan")
+    progress = relationship("Progress",back_populates="user",cascade="all, delete-orphan")

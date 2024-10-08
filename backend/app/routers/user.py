@@ -15,12 +15,14 @@ def create_new_user(user: UserCreate, db: Session = Depends(init_postgres)):
     
     return create_user(user=user,db=db)
 
+
 @router.get("/{user_id}", response_model= User)
 def read_user(user_id: int, db: Session = Depends(init_postgres)):
     user = get_user(user_id=user_id,db=db)
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
 
 @router.put("/{user_id}/password", response_model = User)
 def update_password(user_id: int, user_update: UserUpdate, db: Session = Depends(init_postgres)):
