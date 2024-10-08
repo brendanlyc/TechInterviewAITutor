@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from ..database import Base
+from ..database import PostgresBase
 
-class Progress(Base):
+class Progress(PostgresBase):
     __tablename__ = "progress"
 
     id = Column(Integer, primary_key=True, index=True)

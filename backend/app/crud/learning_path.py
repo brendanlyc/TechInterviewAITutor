@@ -11,8 +11,11 @@ def get_learning_paths(db: Session, user_id: int, skip: int = 0, limit: int = 10
         .order_by(LearningPath.created_at.desc()).offset(skip).limit(limit).all()
     for lp in learning_paths:
         progress = db.query(Progress).filter(Progress.user_id == user_id,Progress.learning_path_id\
-                                             == lp.id)
-        lp.is_completed = progress.current_level > lp.total_levels if progress else False
+                                             == lp.id).first()
+        if progress:
+            lp.is_completed = progress.current_level > len(lp.levels)
+        else:
+            lp.is_completed = False
     return learning_paths
 
 def create_learning_path(db: Session, learning_path: LearningPathCreate):

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
-from ..database import Base
+from ..database import PostgresBase
 
-class Prompt(Base):
+class Prompt(PostgresBase):
     __tablename__ = 'prompts'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)

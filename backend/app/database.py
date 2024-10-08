@@ -9,7 +9,7 @@ postgres_path = "postgresql://user:password@localhost:5432/TetorDB"
 engine = create_engine(postgres_path)
 SessionLocal = sessionmaker(autocommit=False,autoflush=False,bind=engine)
 
-Base = declarative_base()
+PostgresBase = declarative_base()
 
 def init_postgres():
     postgres_db = SessionLocal()
