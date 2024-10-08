@@ -12,7 +12,6 @@ class LearningPathCreate(LearningPathBase):
 class LearningPathUpdate(LearningPathBase):
     title: Optional[str] = None
 
-
 class LearningPath(BaseModel):
     id: int
     created_at: datetime

@@ -7,3 +7,6 @@ pydantic
 sqlalchemy
 argon2-cffi
 email-validator
+motor
+beanie
+asyncio
