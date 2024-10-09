@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from .routers import routes
-from .database import init_mongodb, PostgresBase, engine
+from .database import init_mongodb, PostgresBase, engine, SessionLocal
+from app.scripts.populate_dummy_data import populate_dummy_data
 import asyncio
 
 app = FastAPI(title="Tetor - Tech Interview AI Tutor",
@@ -13,6 +14,8 @@ async def on_startup():
         loop.run_in_executor(None, PostgresBase.metadata.create_all, engine),
         init_mongodb()
     )
+    with SessionLocal() as session:
+        await populate_dummy_data(postgres_db=session)
 
 for route in routes:
     app.include_router(route)
