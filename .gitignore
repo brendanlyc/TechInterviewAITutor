@@ -1,2 +1,3 @@
 #Ignore certs directory
 certs/
+backend/config.ini
