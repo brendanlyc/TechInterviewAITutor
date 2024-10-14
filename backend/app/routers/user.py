@@ -1,17 +1,17 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from ..database import init_postgres
-from ..crud.user import create_user, get_user, get_user_by_username, update_user_password
+from ..crud.user import create_user, get_user, get_user_by_email, update_user_password
 from ..schemas.user import UserCreate, User, UserUpdate
 
 router = APIRouter(prefix="/users",tags=["users"])
 
 @router.post("/", response_model = User)
 def create_new_user(user: UserCreate, db: Session = Depends(init_postgres)):
-    existing_user = get_user_by_username(user.username,db=db)
+    existing_user = get_user_by_email(user.email,db=db)
 
     if existing_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
+        raise HTTPException(status_code=400, detail="User already registered")
     
     return create_user(user=user,db=db)
 

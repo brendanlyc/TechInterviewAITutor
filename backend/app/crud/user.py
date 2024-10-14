@@ -32,3 +32,6 @@ def get_user(user_id: int, db: Session):
 
 def get_user_by_username(username: str, db: Session):
     return db.query(UserModel).filter(UserModel.username == username).first()
+
+def get_user_by_email(email: str, db: Session):
+    return db.query(UserModel).filter(UserModel.email == email).first()
