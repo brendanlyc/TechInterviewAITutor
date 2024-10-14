@@ -6,6 +6,9 @@ from pydantic import SecretStr
 
 def authenticate_user(db: Session, username: str, password: SecretStr):
     user = db.query(User).filter(User.username == username).first()
+    if not user:
+        #check if user used email instead of username to login
+        user = db.query(User).filter(User.email == username).first()
     if user and verify_password(user.hashed_password,password.get_secret_value()):
         return user
     return None
