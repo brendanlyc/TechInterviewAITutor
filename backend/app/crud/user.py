@@ -1,7 +1,7 @@
 
 from sqlalchemy.orm import Session
 from ..models.user import User as UserModel
-from ..schemas.user import UserCreate, UserUpdate
+from ..schemas.user import UserCreate, PasswordUpdate
 from ..utils.auth import hash_password
 
 def create_user(user: UserCreate, db: Session):
@@ -17,12 +17,12 @@ def create_user(user: UserCreate, db: Session):
     db.refresh(new_user)
     return new_user
 
-def update_user_password(user_id: int, user_update: UserUpdate, db: Session):
+def update_user_password(user_id: int, password_update: PasswordUpdate, db: Session):
     user = get_user(user_id=user_id, db=db)
     if user is None:
         return None
     
-    hashed_password = hash_password(user_update.password.get_secret_value())
+    hashed_password = hash_password(password_update.password.get_secret_value())
     user.hashed_password = hashed_password
     db.commit()
     return user

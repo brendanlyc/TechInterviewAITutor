@@ -1,5 +1,6 @@
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
+from fastapi import HTTPException
 from datetime import datetime, timedelta, UTC
 from jose import JWTError, jwt
 import configparser
@@ -33,3 +34,10 @@ def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+def verify_access_token(token: str) -> str:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms = [ALGORITHM])
+        return int(payload.get('sub'))
+    except jwt.JWTError:
+        raise HTTPException(status_code=403, detail="Invalid or expired token")
