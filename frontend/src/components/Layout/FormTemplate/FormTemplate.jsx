@@ -4,12 +4,15 @@ import "./FormTemplate.css"
 
 const FormTemplate= ({
     title,
+    headerContent,
     paragraphContent,
     formContent,
-    footerContent
+    footerContent,
+    className
 }) => {
     return (
-        <div className="form-template-container">
+        <div className={`form-template-container ${className || ''}`}>
+            {headerContent && <div className="form-header-content">{headerContent}</div>}
             {title && <h1>{title}</h1>}
             {paragraphContent && <div className="form-template-paragraph">{paragraphContent}</div>}
             {formContent && <div className="form-template-form">{formContent}</div>}
@@ -19,6 +22,7 @@ const FormTemplate= ({
 }
 
 FormTemplate.propTypes = {
+    headerContent: PropTypes.node,
     title: PropTypes.string,
     paragraphContent: PropTypes.node,
     formContent: PropTypes.node,

@@ -3,7 +3,7 @@ import '../authentication.css';
 import { handleFormSubmit } from "../../../utils/formHandlers";
 
 // templates and layouts
-import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import MainLayout from '../../../components/Layout/MainLayout/MainLayout';
 import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
 
 // components
@@ -36,23 +36,23 @@ const CreateAccountPage = () => {
 
     if (success) {
         return (
-            <LoginLayout>
+            <MainLayout>
                 <FormTemplate 
                     paragraphContent='Account successfully created. Head back to the login page to login'
                     formContent={
                         <>
                             <hr className="form-divider" />
-                            <Button text="Back to Login" onClick={() => window.location.href = '/'} />
+                            <Button className="full-width" text="Back to Login" onClick={() => window.location.href = '/'} />
                         </>
                     }
                 />
-            </LoginLayout>
+            </MainLayout>
         )
     }
 
     else {
         return (
-            <LoginLayout>
+            <MainLayout>
                 <FormTemplate 
                     formContent={
                         <form onSubmit= { handleSignup }>
@@ -83,7 +83,7 @@ const CreateAccountPage = () => {
                                 />
                             </div>
                             <hr className="form-divider" />
-                            <Button text={loading ? "Creating Account..." :  "Sign Up Now"} disabled={loading} />
+                            <Button className="full-width" text={loading ? "Creating Account..." :  "Sign Up Now"} disabled={loading} />
                             <ErrorMessage message={error} />
                         </form>
                     }
@@ -91,7 +91,7 @@ const CreateAccountPage = () => {
                         <p>Have an account? <a href="/">Login</a></p>
                     }
                 />
-            </LoginLayout>
+            </MainLayout>
         )
     };
 };

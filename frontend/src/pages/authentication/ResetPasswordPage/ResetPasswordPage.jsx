@@ -4,7 +4,7 @@ import '../authentication.css';
 import { handleFormSubmit } from "../../../utils/formHandlers";
 
 // templates and layouts
-import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import MainLayout from '../../../components/Layout/MainLayout/MainLayout';
 import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
 
 // components
@@ -43,7 +43,7 @@ const ResetPasswordPage = () => {
 
     if (success) {
         return (
-            <LoginLayout>
+            <MainLayout>
                 <FormTemplate 
                     title="Reset Password"
                     paragraphContent='Successfully reset password. Head back
@@ -51,16 +51,16 @@ const ResetPasswordPage = () => {
                     formContent={
                         <>
                             <hr className="form-divider" />
-                            <Button text="Back to login" onClick={() => window.location.href = '/'} />
+                            <Button className="full-width" text="Back to login" onClick={() => window.location.href = '/'} />
                         </>
                     }
                 />
-            </LoginLayout>
+            </MainLayout>
         );
     };
 
     return (
-        <LoginLayout>
+        <MainLayout>
             <FormTemplate 
                 title="Reset Password"
                 formContent={
@@ -84,12 +84,12 @@ const ResetPasswordPage = () => {
                             />
                         </div>
                         <hr className="form-divider" />
-                        <Button text={loading ? "Resetting..." : "Reset Password"} disabled={loading} />
+                        <Button className="full-width" text={loading ? "Resetting..." : "Reset Password"} disabled={loading} />
                         <ErrorMessage message={error} />
                     </form>
                 }
             />
-        </LoginLayout>
+        </MainLayout>
     );
 };
 

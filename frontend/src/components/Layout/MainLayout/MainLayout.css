@@ -1,0 +1,44 @@
+/* .content-container {
+    background-color: #F5F5F5;
+    width: fit-content;
+    height: fit-content;
+    display: flex; 
+    margin: auto;
+} */
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+}
+
+.tetor-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.tetor-name {
+    font-family: 'Didot', sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+}
+
+.tetor-logo-pic {
+    height: 85px;
+    width: 64px;
+}
+
+.settings-icon {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.settings-icon:hover {
+    transform: scale(1.2);
+}
+

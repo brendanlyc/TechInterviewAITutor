@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './components.css';
 
-const Button = ({ text, type, onClick, disabled }) => {
+const Button = ({ text, type, onClick, disabled, className }) => {
     return (
         <button 
             type={type}
             onClick={onClick}
-            className="button"
+            className={`button ${className}`}
             disabled={disabled}
         >
             {text}

@@ -23,11 +23,12 @@ function App() {
 
           <Route 
             path="/home"
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            }
+            // element={
+            //   <PrivateRoute>
+            //     <HomePage />
+            //   </PrivateRoute>
+            // }
+            element={<HomePage />}
           />
         </Routes>
       </BrowserRouter>

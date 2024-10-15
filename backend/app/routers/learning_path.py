@@ -40,6 +40,9 @@ def read_learning_paths(user_id: int, skip: int = 0, limit: int = 0, db: Session
         if not path.is_completed:
             current_level_title = levels[current_level-1]
 
+        else:
+            current_level_title = None
+
         user_learning_paths.append({
             "id": path.id,
             "title": path.title,

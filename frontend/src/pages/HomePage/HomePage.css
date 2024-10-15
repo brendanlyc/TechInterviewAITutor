@@ -1,0 +1,97 @@
+.home-page-container {
+    position: relative;
+}
+
+.home-page-content-container {
+    box-sizing: border-box;
+    background-color: #F5F5F5;
+    width: 100%;
+    padding: 5px 0 1000px;
+}
+
+.no-learning-path-statement {
+    font-weight: normal;
+}
+
+.learning-paths-container {
+    position: relative;
+    background-color: #D3EEF4;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+    margin: auto;
+    padding: 10px 10px 0px 10px;
+    max-height: 490px;
+    overflow-y: auto;
+}
+
+.learning-path-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.learning-path-column-right {
+    margin: auto 0;    
+}
+
+.learning-path-box {
+    box-sizing: border-box;
+    background: #E5F13A;
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin-bottom: 12px;
+}
+
+.learning-path-box:hover {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+}
+
+.learning-path-completed {
+    background: #52C274;
+}
+
+.create-new-topic-button {
+    position: sticky;
+    bottom: 0px;
+    display: flex;
+    font-weight: bold;
+    font-size: 28px;
+    margin: 0 auto;
+    padding: 12px 24px;
+}
+
+/* State Changes */
+.home-page-content-container.blurred {
+    filter: blur(5px);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Typography */
+
+.learning-paths-welcome-statement, 
+.learning-paths-pick-topic-statement,
+.no-learning-path-statement,
+.learning-path-next-level
+{
+    font-weight: bold;
+    text-align: center;
+}
+
+.learning-paths-welcome-statement {
+    font-size: 24px;
+}
+
+.learning-paths-pick-topic-statement {
+    font-size: 40px;
+}
+
+.learning-path-title {
+    font-size: 45px;
+}
+
+.learning-path-next-level {
+    font-size: 25px;
+}

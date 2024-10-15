@@ -5,7 +5,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { handleFormSubmit } from "../../../utils/formHandlers";
 
 // templates and layouts
-import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import MainLayout from '../../../components/Layout/MainLayout/MainLayout';
 import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
 
 // components
@@ -44,7 +44,7 @@ const LoginPage = () => {
     };
 
     return (
-        <LoginLayout>
+        <MainLayout>
             <FormTemplate 
                 title="Login"
                 formContent={
@@ -68,7 +68,7 @@ const LoginPage = () => {
                             />
                         </div>
                         <hr className="form-divider" />
-                        <Button text={loading ? "Logging in..." : "Login"} disabled={loading} />
+                        <Button className="full-width" text={loading ? "Logging in..." : "Login"} disabled={loading} />
                         <ErrorMessage message={error} />
                     </form>
                 }
@@ -79,7 +79,7 @@ const LoginPage = () => {
                     </>
                 }
             />
-        </LoginLayout>
+        </MainLayout>
     );
 };
 

@@ -4,7 +4,7 @@ import '../authentication.css';
 import { handleFormSubmit } from "../../../utils/formHandlers";
 
 // templates and layouts
-import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import MainLayout from '../../../components/Layout/MainLayout/MainLayout';
 import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
 
 // components
@@ -35,23 +35,23 @@ const ResetPasswordRequestPage = () => {
 
     if (success) {
         return (
-            <LoginLayout>
+            <MainLayout>
                 <FormTemplate 
                     title='Reset Password'
                     paragraphContent='We have emailed you a link to reset your password. Please check your inbox.'
                     formContent= {
                         <>
                             <hr className="form-divider" />
-                            <Button text="Back to Login" onClick={() => window.location.href = '/'} />
+                            <Button className="full-width" text="Back to Login" onClick={() => window.location.href = '/'} />
                         </>
                     }
                 />
-            </LoginLayout>
+            </MainLayout>
         )
     }
 
     return (
-        <LoginLayout>
+        <MainLayout>
             <FormTemplate 
                 title="Reset Password"
                 paragraphContent="Enter the email you signed up with. We will email you a link to log in and reset your password."
@@ -68,7 +68,7 @@ const ResetPasswordRequestPage = () => {
                                 />
                         </div>
                         <hr className="form-divider" />
-                        <Button text={loading ? "Sending..." : "Send Link"} disabled={loading} />
+                        <Button className="full-width" text={loading ? "Sending..." : "Send Link"} disabled={loading} />
                         <ErrorMessage message={error} />
                     </form>
                 }
@@ -76,7 +76,7 @@ const ResetPasswordRequestPage = () => {
                     <p>Don't have an account? <Link to="/create-account">Sign Up</Link></p>
                 }
             />
-        </LoginLayout>
+        </MainLayout>
     );
 };
 
