@@ -1,72 +1,65 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import '../authentication.css';
 import { useAuth } from '../../../context/AuthContext';
-import LoginLayout from '../../../components/Layout/LoginLayout';
+import { handleFormSubmit } from "../../../utils/formHandlers";
+
+// templates and layouts
+import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
+
+// components
+import InputField from "../../../components/InputField";
+import Button from "../../../components/Button";
+import ErrorMessage from "../../../components/ErrorMessage";
+
+// styling
+
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const { setAuthState } = useAuth();
- 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError('');
+    const navigate = useNavigate();
 
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
-            })
-
-            if (!response.ok) {
-                const errorData = await response.json()  
-                throw new Error(errorData.detail || 'Login failed');
-            }
-
-            const data = await response.json()  
-
-            setAuthState({
-                token: data.token,
-                userId: data.userId,
-                username: data.username
-            })
-            
-            console.log("Login successful!")
-            //navigate('/home')
-
-        } catch (err) {
-            setError(err.message);
-            console.error(err);
-        }
-    }
-
-    console.log(error)
-
+    const handleLogin = async(e) => {
+        setLoading(true);
+        await handleFormSubmit({
+            e,
+            apiUrl: 'api/auth/login',
+            body: {username, password},
+            onSuccess: (data) => {
+                setAuthState({
+                    token: data.token,
+                    userId: data.userId,
+                    username: data.username
+                });
+                navigate('/home');
+            },
+            onError: setError,
+        });
+        setLoading(false);
+    };
 
     return (
         <LoginLayout>
-            <div className="login-container">
-                <div className="login-card">
-                    <form onSubmit={ handleLogin }>
-                        <div className="login-form-component">
-                            <label>Username</label>
-                            <input 
-                                type="username"
+            <FormTemplate 
+                title="Login"
+                formContent={
+                    <form onSubmit={handleLogin}>
+                        <div className="form-input-components">
+                            <InputField 
+                                label="Username"
+                                type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 placeholder="Type your username"
                                 required
                             />
-                            <label>Password</label>
-                            <input 
+                            <InputField 
+                                label="Password"
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -74,18 +67,18 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
-
-                        {error && <p className="login-error-message">{error}</p>}
-
-                        <button type="submit" className="login-submit-button">
-                            Login
-                        </button>
+                        <hr className="form-divider" />
+                        <Button text={loading ? "Logging in..." : "Login"} disabled={loading} />
+                        <ErrorMessage message={error} />
                     </form>
-                    <p className="create-account-login-redirect-line">
-                        Don't have an account? <a href="/create-account">Sign Up</a>
-                    </p>
-                </div>
-            </div>
+                }
+                footerContent={
+                    <>
+                        <p><Link to="/reset-password">Forget password?</Link></p>
+                        <p>Don't have an account? <Link to="/create-account">Sign Up</Link></p>
+                    </>
+                }
+            />
         </LoginLayout>
     );
 };

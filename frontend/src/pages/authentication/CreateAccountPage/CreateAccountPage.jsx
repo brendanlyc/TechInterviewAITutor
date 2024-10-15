@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import '../authentication.css';
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'
-import LoginLayout from '../../../components/Layout/LoginLayout';
+import { handleFormSubmit } from "../../../utils/formHandlers";
+
+// templates and layouts
+import LoginLayout from '../../../components/Layout/LoginLayout/LoginLayout';
+import FormTemplate from "../../../components/Layout/FormTemplate/FormTemplate";
+
+// components
+import InputField from "../../../components/InputField";
+import Button from "../../../components/Button";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 
 const CreateAccountPage = () => {
@@ -10,87 +17,83 @@ const CreateAccountPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
- 
-    const handleSignup = async (e) => {
-        e.preventDefault();
-        try {
-            setError('');
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false)
 
-            const response = await fetch('/api/users/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    username,
-                    password
-                })
-            })
+    const handleSignup = async(e) => {
+        setLoading(true);
+        await handleFormSubmit({
+            e,
+            apiUrl: 'api/users/',
+            body: { email, username, password },
+            onSuccess: () => {
+                setSuccess(true);
+            },
+            onError: setError,
+        });
+        setLoading(false);
+    };
 
-            if (!response.ok) {
-                const errorData = await response.json()  
-                throw new Error(errorData.detail || 'Failed to create an account');
-            }
-
-            const data = await response.json()  
-            
-            //navigate('/signup-success')
-
-        } catch (err) {
-            setError(err.message);
-            console.error(err);
-        }
+    if (success) {
+        return (
+            <LoginLayout>
+                <FormTemplate 
+                    paragraphContent='Account successfully created. Head back to the login page to login'
+                    formContent={
+                        <>
+                            <hr className="form-divider" />
+                            <Button text="Back to Login" onClick={() => window.location.href = '/'} />
+                        </>
+                    }
+                />
+            </LoginLayout>
+        )
     }
 
-    console.log(error)
-
-
-    return (
-        <LoginLayout>
-            <div className="create-account-container">
-                <div className="create-account-card">
-                    <form onSubmit={ handleSignup }>
-                        <div className="create-account-form-component">
-                            <label>Email</label>
-                            <input 
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Type your email"
-                                required
-                            />
-                            <label>Username</label>
-                            <input 
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Type your username"
-                                required
-                            />
-                            <label>Password</label>
-                            <input 
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Type your password"
-                                required
-                            />
-                        </div>
-
-                        {error && <p className="create-account-error-message">{error}</p>}
-
-                        <button type="submit" className="create-account-submit-button">
-                            Sign Up Now
-                        </button>
-                    </form>
-                    <p className="create-account-login-redirect-line">
-                        Have an account? <a href="/">Login</a>
-                    </p>
-                </div>
-            </div>
-        </LoginLayout>
-    );
+    else {
+        return (
+            <LoginLayout>
+                <FormTemplate 
+                    formContent={
+                        <form onSubmit= { handleSignup }>
+                            <div className="form-input-components">
+                                <InputField 
+                                    label="Email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Type your email"
+                                    required
+                                />
+                                <InputField 
+                                    label="Username"
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    placeholder="Type your username"
+                                    required
+                                />
+                                <InputField 
+                                    label="Password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Type your password"
+                                    required
+                                />
+                            </div>
+                            <hr className="form-divider" />
+                            <Button text={loading ? "Creating Account..." :  "Sign Up Now"} disabled={loading} />
+                            <ErrorMessage message={error} />
+                        </form>
+                    }
+                    footerContent={
+                        <p>Have an account? <a href="/">Login</a></p>
+                    }
+                />
+            </LoginLayout>
+        )
+    };
 };
 
 export default CreateAccountPage;

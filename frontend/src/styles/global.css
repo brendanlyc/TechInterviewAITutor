@@ -1,0 +1,17 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #D3EEF4;
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-divider {
+    border: none; 
+    border-top: 1px solid #CAC4D0; 
+    margin: 10px auto;
+    width: 90%;
+}
