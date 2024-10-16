@@ -55,12 +55,16 @@ button:hover:not(:disabled) {
 
 textarea {
     resize: vertical;
+    min-height: 30px;
+    max-height: 200px;
 }
 
 /* New Topic Box */
 .new-topic-box {
     position: absolute;
-    top: 50%;
+    /* top: 50%;s
+    left: 50%; */
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;

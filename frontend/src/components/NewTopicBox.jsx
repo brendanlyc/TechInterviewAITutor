@@ -25,12 +25,6 @@ const NewTopicBox = ({ onClose }) => {
                 </div>
                 <FormTemplate
                     title="New Topic"
-                    // headerContent={
-                    //     <div onClick={onClose} className='back-button'>
-                    //         <img className="back-logo" src={BackLogo} alt="Back logo" />
-                    //         <span className="back-name">Back</span>
-                    //     </div>
-                    // }
                     formContent={
                     <form onSubmit={handleCreateTopic}>
                         <div className="form-input-components">
