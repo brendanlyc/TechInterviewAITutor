@@ -6,6 +6,7 @@ from .level import router as level_routes
 from .content import router as content_routes
 from .review_question import router as review_question_routes
 from .auth import router as auth_routes
+from .openai import router as openai_routes
 
 routes = [
     prompt_routes,
@@ -15,5 +16,6 @@ routes = [
     level_routes,
     content_routes,
     review_question_routes,
-    auth_routes
+    auth_routes,
+    openai_routes
 ]

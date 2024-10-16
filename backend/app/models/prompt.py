@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float
 from ..database import PostgresBase
 
 class Prompt(PostgresBase):
@@ -6,4 +6,6 @@ class Prompt(PostgresBase):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String,unique=True, index=True, nullable=False)
-    content = Column(String,unique=True,nullable=False)
+    system_content = Column(String, nullable=False)
+    user_content = Column(String, nullable=False)
+    temperature = Column(Float, nullable=False)

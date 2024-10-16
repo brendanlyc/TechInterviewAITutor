@@ -1,11 +1,13 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 class LevelBase(BaseModel):
     learning_path_id: int
     level_number: int
     title: str
+    goal: str
+    concepts: List[str]
     content_reference: Optional[str] = None
     review_question_reference: Optional[str] = None
 

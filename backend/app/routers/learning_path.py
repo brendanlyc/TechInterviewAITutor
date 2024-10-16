@@ -46,6 +46,7 @@ def read_learning_paths(user_id: int, skip: int = 0, limit: int = 0, db: Session
         user_learning_paths.append({
             "id": path.id,
             "title": path.title,
+            "experience": path.experience_level,
             "created_at": path.created_at,
             "current_level": current_level,
             "total_levels": total_levels,

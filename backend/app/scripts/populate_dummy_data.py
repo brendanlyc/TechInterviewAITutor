@@ -1,15 +1,17 @@
 from sqlalchemy.orm import Session
-from app.crud import user as user_crud, learning_path as lp_crud, level as lvl_crud, progress as progress_crud
+from app.crud import user as user_crud, learning_path as lp_crud, level as lvl_crud, progress as progress_crud, prompt as prompt_crud
 from app.schemas.user import UserCreate
 from app.schemas.learning_path import LearningPathCreate
 from app.schemas.level import LevelCreate
 from app.schemas.progress import ProgressCreate
+from app.schemas.prompt import PromptCreate
 from app.models.content import Content
 from app.models.review_question import ReviewQuestion
 
 from datetime import datetime
 
 from pydantic import SecretStr
+
 
 async def create_mongodb_content_for_level(level_reference: str):
     content_doc = Content(level_reference=level_reference,
@@ -26,12 +28,12 @@ async def create_mongodb_review_question_for_level(level_reference: str):
     return review_question_doc
 
 async def populate_dummy_data(postgres_db: Session):
-    user_1 = user_crud.get_user_by_username(username="testacc", db=postgres_db)
+    user_1 = user_crud.get_user_by_username(username="test123acc", db=postgres_db)
     if not user_1:
         user_1 = user_crud.create_user(
             user=UserCreate(
-                email="testacc@gmail.com",
-                username="testacc",
+                email="test123@gmail.com",
+                username="test123acc",
                 password=SecretStr("password")
             ),
             db = postgres_db
@@ -45,7 +47,8 @@ async def populate_dummy_data(postgres_db: Session):
                 db=postgres_db,
                 learning_path=LearningPathCreate(
                     user_id = user_1.id,
-                    title = title
+                    title = title,
+                    experience_level = "Completed basic data structures and algorithms course in university"
                 ))
             
             learning_paths.append(lp)
@@ -63,6 +66,8 @@ async def populate_dummy_data(postgres_db: Session):
                         learning_path_id=lp.id,
                         level_number=i,
                         title=f"Level {i}",
+                        goal="",
+                        concepts=[],
                         content_reference=str(content_doc.id),
                         review_question_reference=str(review_question_doc.id)
                 ))
@@ -93,6 +98,3 @@ async def populate_dummy_data(postgres_db: Session):
                 current_level = 4
             )
         )
-            
-        
-

@@ -9,6 +9,8 @@ class LearningPath(PostgresBase):
     id = Column(Integer,primary_key=True,index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     title = Column(String, index=True, nullable=False)
+    experience_level = Column(String, nullable = False)
+
     created_at = Column(TIMESTAMP, default=datetime.now(UTC))
 
     user = relationship("User",back_populates="learning_paths")

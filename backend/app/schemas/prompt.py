@@ -2,13 +2,17 @@ from pydantic import BaseModel
 
 class PromptBase(BaseModel):
     name: str
-    content: str
+    system_content: str
+    user_content: str
+    temperature: float
 
 class PromptCreate(PromptBase):
     pass
 
 class PromptUpdate(BaseModel):
-    content: str
+    system_content: str
+    user_content: str
+    temperature: float
 
 
 class Prompt(PromptBase):

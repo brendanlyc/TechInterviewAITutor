@@ -5,6 +5,7 @@ from typing import Optional
 class LearningPathBase(BaseModel):
     user_id: int
     title: str
+    experience_level: str
 
 class LearningPathCreate(LearningPathBase):
     pass
