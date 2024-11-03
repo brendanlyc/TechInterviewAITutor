@@ -6,7 +6,7 @@
     box-sizing: border-box;
     background-color: #F5F5F5;
     width: 100%;
-    padding: 5px 0 1000px;
+    padding: 5px 0 460px;
 }
 
 .no-learning-path-statement {
@@ -37,20 +37,17 @@
 
 .learning-path-box {
     box-sizing: border-box;
-    background: #E5F13A;
+    background: #F4D9D3;
     border-radius: 10px;
-    padding: 10px 30px;
+    border: 1px solid black;
+    padding: 10px 40px;
     margin-bottom: 12px;
 }
 
-.learning-path-box:hover {
+/* .learning-path-box:hover {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
     cursor: pointer;
-}
-
-.learning-path-completed {
-    background: #52C274;
-}
+} */
 
 .create-new-topic-button {
     position: sticky;
@@ -89,7 +86,7 @@
 }
 
 .learning-path-title {
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .learning-path-next-level {

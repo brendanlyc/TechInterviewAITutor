@@ -3,8 +3,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
-from .models.content import Content
-from .models.review_question import ReviewQuestion
+from .models.learning_path_content import LearningPathContent
+from .models.diagnostic_test import DiagnosticTest
+from .models.diagnostic_test_results import DiagnosticTestResult
+from .models.user_concept_mastery import UserConceptMastery
 
 
 #environment set up
@@ -26,4 +28,4 @@ def init_postgres():
     
 async def init_mongodb():
     client = AsyncIOMotorClient(mongodb_path)
-    await init_beanie(database=client.tetordb,document_models=[Content, ReviewQuestion])
+    await init_beanie(database=client.tetordb,document_models=[LearningPathContent, DiagnosticTest, DiagnosticTestResult, UserConceptMastery])

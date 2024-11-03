@@ -1,20 +1,50 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import FormTemplate from './Layout/FormTemplate/FormTemplate';
 import BackLogo from "../static/images/BackLogo.png";
 import InputField from './InputField';
 import Button from './Button';
 import './components.css';
+import { handleFormSubmit } from "../utils/formHandlers"
+import ErrorMessage from "./ErrorMessage";
 
-const NewTopicBox = ({ onClose }) => {
+const NewTopicBox = ({ onClose, userId }) => {
     const [topicTitle, setTopicTitle] = useState('');
-    const [topicExperience, setTopicExperience] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-    const handleCreateTopic = () => {
-        // Need to add API logic here
+    const handleCreateTopic = async(e) => {
+        e.preventDefault();
         setLoading(true);
+
+        await handleFormSubmit({
+            e,
+            apiUrl: 'api/learning_paths/',
+            body: { user_id: Number(userId),
+                    title: topicTitle,
+                    },
+            onSuccess: async () => {
+                const fetchLearningPathId = await fetch(`/api/learning_paths/user_id/${userId}/learning_path_title/${topicTitle}`)
+                if (!fetchLearningPathId.ok) {
+                    setError("Failed to fetch learning path Id");
+                    setLoading(false);
+                    return;
+                }
+
+                const learningPathData = await fetchLearningPathId.json();
+                const learningPathId = learningPathData.id;
+
+                navigate(`/content/${userId}/${topicTitle}`);
+            },
+            onError: (errorMessage) => {
+                setError(errorMessage);
+                setLoading(false);
+            },
+        });
         setLoading(false);
-    }
+    };
 
     return (
         <div className="new-topic-box">
@@ -35,16 +65,13 @@ const NewTopicBox = ({ onClose }) => {
                                 value={topicTitle}
                                 onChange={e => setTopicTitle(e.target.value)}
                             />
-                            <label className="text-area-label" htmlFor="experience">How much experience do you have with this topic?</label>
-                            <textarea 
-                                id="experience"
-                                name="experience"
-                                value={topicExperience}
-                                placeholder="Describe how much experience you have had with this topic here"
-                                onChange={e => setTopicExperience(e.target.value)}
-                            />
                         </div>
-                        <Button text={loading ? 'Creating topic...' : "Create Topic"} disabled={loading} />
+                        <Button 
+                            className="full-width"
+                            text={loading ? 'Creating topic...' : "Create Topic"} 
+                            disabled={loading} 
+                        />
+                        <ErrorMessage message={error} />
                     </form>
                     }
                     className="popup"

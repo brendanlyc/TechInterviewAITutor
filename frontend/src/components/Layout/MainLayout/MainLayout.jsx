@@ -23,7 +23,7 @@ const MainLayout = ({children, contentFullWidth = false}) => {
                     <span className="tetor-name">TETOR</span>
 
                 </div>
-                <img className="settings-icon" src={SettingsIcon} alt="Settings Button" onClick={handleNavigateToSettings} />
+                {isAuthenticated && <img className="settings-icon" src={SettingsIcon} alt="Settings Button" onClick={handleNavigateToSettings} />}
             </div>
 
             <div className={`content-container ${contentFullWidth ? 'full-width' : ''}`}>

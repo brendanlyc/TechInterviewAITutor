@@ -6,6 +6,8 @@ import LoginPage from './pages/authentication/LoginPage/LoginPage'
 import CreateAccountPage from './pages/authentication/CreateAccountPage/CreateAccountPage';
 import ResetPasswordPage from './pages/authentication/ResetPasswordPage/ResetPasswordPage';
 import ResetPasswordRequestPage from './pages/authentication/ResetPasswordRequestPage/ResetPasswordRequestPage';
+import ContentPage from './pages/ContentPage/ContentPage';
+import Settings from './pages/Settings/Settings';
 import PrivateRoute from './PrivateRoute';
 
 function App() {
@@ -30,6 +32,27 @@ function App() {
             // }
             element={<HomePage />}
           />
+
+          <Route 
+            path="/settings"
+            // element={
+            //   <PrivateRoute>
+            //     <Settings />
+            //   </PrivateRoute>
+            // }
+            element={<Settings />}
+          />
+
+          <Route 
+            path="/content/:userId/:title"
+            // element={
+            //   <PrivateRoute>
+            //     <ContentPage />
+            //   </PrivateRoute>
+            // }
+            element={<ContentPage />}
+          />
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -11,7 +11,7 @@ const FormTemplate= ({
     className
 }) => {
     return (
-        <div className={`form-template-container ${className || ''}`}>
+        <div className={`template-container ${className || ''}`}>
             {headerContent && <div className="form-header-content">{headerContent}</div>}
             {title && <h1>{title}</h1>}
             {paragraphContent && <div className="form-template-paragraph">{paragraphContent}</div>}

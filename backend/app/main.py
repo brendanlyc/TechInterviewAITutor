@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from .routers import routes
 from .database import init_mongodb, PostgresBase, engine, SessionLocal
 from app.scripts.populate_dummy_data import populate_dummy_data
-from app.scripts.populate_prompts import store_prompt_in_db
 import asyncio
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,7 +25,6 @@ async def on_startup():
     )
     with SessionLocal() as session:
         await populate_dummy_data(postgres_db=session)
-        await store_prompt_in_db(postgres_db=session)
 
 for route in routes:
     app.include_router(route)

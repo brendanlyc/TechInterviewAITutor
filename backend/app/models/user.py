@@ -11,4 +11,3 @@ class User(PostgresBase):
     hashed_password = Column(String(255),nullable=False)
 
     learning_paths = relationship("LearningPath", back_populates="user", cascade="all, delete-orphan")
-    progress = relationship("Progress",back_populates="user",cascade="all, delete-orphan")

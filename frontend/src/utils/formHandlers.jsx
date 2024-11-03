@@ -8,11 +8,6 @@ export const handleFormSubmit = async({
     onError
 }) => {
     e.preventDefault();
-    const response = await fetch(apiUrl, {
-        method,
-        headers,
-        body: JSON.stringify(body)
-    });
 
     try {
         console.log(apiUrl)
